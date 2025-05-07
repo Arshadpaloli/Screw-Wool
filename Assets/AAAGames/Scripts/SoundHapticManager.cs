@@ -34,7 +34,7 @@ public class SoundHapticManager : MonoBehaviour
     {
         var s = Array.Find(sounds, sound => sound.name == SoundName);
         s.Play();
-        Vibration.VibrateAndroid(VIBRATION);
+        // Vibration.VibrateAndroid(VIBRATION);
     }
     public void PlayAudioWithOutVibration(string SoundName)
     {

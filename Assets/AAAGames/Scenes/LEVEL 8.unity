@@ -10047,7 +10047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1489515908
 Transform:
   m_ObjectHideFlags: 0
@@ -22547,6 +22547,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1004881445205310578, guid: e08e35365bc655041adb686797d3eed4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502720907325577344, guid: e08e35365bc655041adb686797d3eed4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7961770147111583588, guid: e08e35365bc655041adb686797d3eed4, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -22626,6 +22634,10 @@ PrefabInstance:
     - target: {fileID: 7961770147111583588, guid: e08e35365bc655041adb686797d3eed4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8453805452055968430, guid: e08e35365bc655041adb686797d3eed4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23123,6 +23135,7 @@ MonoBehaviour:
   CAM_LAST_POS: {x: 0, y: 10, z: -16.79}
   CAM_LAST_ZOOM: 12
   LAST_EFFECT: {fileID: 65499095}
+  ZOOM_SIZE: 0.1
 --- !u!1001 &1904319666
 PrefabInstance:
   m_ObjectHideFlags: 0
