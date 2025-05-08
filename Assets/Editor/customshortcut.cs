@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+using UnityEditor.SceneManagement;
 public class customshortcut : Editor
 {
     private static Vector3 copiedPosition; // Store copied position
@@ -197,7 +198,48 @@ public class customshortcut : Editor
             hierarchyWindow.SendEvent(e);
         }
     }
+    [MenuItem("Tools/Remove Missing Scripts _&e", false, 0)] 
+    static void RemoveMissingScripts()
+    {
+        GameObject[] selectedObjects = Selection.gameObjects;
 
+        int totalRemoved = 0;
+
+        foreach (GameObject go in selectedObjects)
+        {
+            totalRemoved += RemoveMissingScriptsRecursive(go);
+        }
+
+        if (totalRemoved > 0)
+        {
+            Debug.Log($"Removed missing scripts from {totalRemoved} GameObjects.");
+        }
+        else
+        {
+            Debug.Log("No missing scripts found.");
+        }
+    }
+    // Recursively remove missing scripts from a GameObject and its children
+    static int RemoveMissingScriptsRecursive(GameObject go)
+    {
+        int count = 0;
+
+        // Remove from the GameObject itself
+        if (GameObjectUtility.RemoveMonoBehavioursWithMissingScript(go) > 0)
+        {
+            count++;
+            Undo.RegisterCompleteObjectUndo(go, "Remove Missing Scripts");
+            EditorSceneManager.MarkSceneDirty(go.scene);
+        }
+
+        // Recurse through children
+        foreach (Transform child in go.transform)
+        {
+            count += RemoveMissingScriptsRecursive(child.gameObject);
+        }
+
+        return count;
+    }
     // Gets the current hierarchy window
     static EditorWindow GetHierarchyWindow()
     {
