@@ -8,10 +8,10 @@ public class Button3DEvent : MonoBehaviour
     public UnityEvent onClick;
     public void OnMouseDown()
     {
-        if(UI_MANAGER.Instance.FAIL_PANEL.gameObject.activeInHierarchy==false)
-        {
+        // if(UI_MANAGER.Instance.FAIL_PANEL.gameObject.activeInHierarchy==false)
+        // {
             Debug.Log("3D Button Pressed!");
             onClick?.Invoke(); // Safely invoke the event
-        }
+        // }
     }
 }

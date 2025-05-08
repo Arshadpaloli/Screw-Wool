@@ -68,7 +68,7 @@ public class CrateManager : MonoBehaviour
 
 
         GETTING_ROLLS();
-        StartCoroutine(Rolls_Entry());
+        // StartCoroutine(Rolls_Entry());
         GroupCapsByColor();
         CheckIfonSlot();
 
@@ -108,7 +108,7 @@ public class CrateManager : MonoBehaviour
                 .OnComplete(() =>
                 {
                     roll.transform.GetComponent<EachCap>()._Tray.TurnOnRop();
-                    roll.transform.GetComponent<EachCap>().SetHiddeen();
+                    // roll.transform.GetComponent<EachCap>().SetHiddeen();
 
                 });
 
@@ -177,52 +177,45 @@ public class CrateManager : MonoBehaviour
     }
     public void ThreadToSlot(EachCap Thread)
     {
+        // Thread.gameObject.SetActive(false);
+       Thread.TOUCH_EFECT(); 
         Crate OwnerPoint = ThreadPoint(Thread);
         ThreadEffect ThreadRope = Thread.GetComponent<ThreadEffect>();
         if (OwnerPoint != null)
         {
-            if (Thread.ConnectedObject != null)
-            {
-                DOVirtual.DelayedCall(.1f, () =>
-                {
-                    MoveConnectedRop(Thread.ConnectedObject);
-
-                });
-            }
+            // if (Thread.ConnectedObject != null)
+            // {
+            //     DOVirtual.DelayedCall(.1f, () =>
+            //     {
+            //         MoveConnectedRop(Thread.ConnectedObject);
+            //
+            //     });
+            // }
             ThreadRope.endPoint = OwnerPoint.OnThreadEnter();
-            Thread.GetComponent<CapsuleCollider>().enabled = false;
-            ThreadRope.ROPE_GO();
+            // Thread.GetComponent<CapsuleCollider>().enabled = false;
             ThreadRope._crate = OwnerPoint;
+
+            ThreadRope.ROPE_GO();
             On_Touch(Thread);
           
         }
         else
         {
-            if (Thread.ConnectedObject != null)
-            {
-                DOVirtual.DelayedCall(.1f, () =>
-                {
-                    MoveConnectedRop(Thread.ConnectedObject);
-
-                });
-            }
+            // if (Thread.ConnectedObject != null)
+            // {
+            //     DOVirtual.DelayedCall(.1f, () =>
+            //     {
+            //         MoveConnectedRop(Thread.ConnectedObject);
+            //
+            //     });
+            // }
             _ManageTheCrate.RopeMoveTOWaitingRop(Thread);
         }
     }
 
     public void On_Touch(EachCap Thread)
     {
-        Thread.TOUCH_EFECT();
-        Thread.transform.DOLocalRotate(new Vector3(0, 360, 0), 0.75f, RotateMode.FastBeyond360)
-            .SetEase(Ease.Linear);
-        Thread.transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.Linear);
-        Thread.transform.DOShakeRotation(
-            duration: 0.75f,
-            strength: new Vector3(5, 0, 20),
-            vibrato: 10,
-            randomness: 0,
-            fadeOut: true
-        );
+       
     }
     public void CheckIfonSlot()
     {

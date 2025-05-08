@@ -23,11 +23,10 @@ public class ReconnectPrefabDingzi01 : EditorWindow
         {
             if (obj.name == "Dingzi01")
             {
-                GameObject source = PrefabUtility.GetCorrespondingObjectFromOriginalSource(obj);
-                if (source == null)
+                var prefabInstanceStatus = PrefabUtility.GetPrefabInstanceStatus(obj);
+                if (prefabInstanceStatus == PrefabInstanceStatus.NotAPrefab)
                 {
-                    PrefabUtility.UnpackPrefabInstance(obj, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
-                    PrefabUtility.SaveAsPrefabAssetAndConnect(obj, prefabPath, InteractionMode.AutomatedAction);
+                    PrefabUtility.SaveAsPrefabAssetAndConnect(obj, prefabPath, InteractionMode.UserAction);
                     count++;
                 }
             }

@@ -178,7 +178,7 @@ public class ManageTheCrate : MonoBehaviour
         {
             if (!WaitingRop[i].Oqq && !lockedSlots[i])
             {
-                Rope.GetComponent<CapsuleCollider>().enabled = false;
+                // Rope.GetComponent<CapsuleCollider>().enabled = false;
                 _crateManager.On_Touch(Rope);
 
                 WaitingRop[i].GetComponent<MeshRenderer>().material.color =

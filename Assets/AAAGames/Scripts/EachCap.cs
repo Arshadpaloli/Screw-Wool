@@ -7,81 +7,70 @@ public class EachCap : MonoBehaviour
 {
     public ColorType CapColor;
     public GameObject TOUCH_EFFECT;
-
-    public List<GameObject> THREAD_ROLLS;
+    public MeshRenderer _OwnMeshRenderer;
+    // public List<GameObject> THREAD_ROLLS;
     public Tray _Tray;
-    public bool Hidden,Rope;
-    public GameObject HiddenGameObject;
-    public EachCap ConnectedObject;
-    private void Awake()
-    {
-        _Tray = transform.parent.transform.parent.GetComponent<Tray>();
-        _Tray.TrayHold.Add(this);
-    }
+    public HingeJoint _HingeJoint;
+
+   
     private void Start()
     {
         MY_COLOR();
-       
-        
+       _Tray= transform.parent.parent.transform.GetComponent<Tray>();
+       _Tray.TrayHold.Add(this);
+        _HingeJoint = GetComponent<HingeJoint>();
+        _HingeJoint.connectedBody= transform.parent.parent.transform.GetComponent<Rigidbody>();
+        transform.parent = transform.parent.parent.transform.parent.transform;
+
     }
 
-    public void SetHiddeen()
-    {
-        if (Hidden)
-        {
-            transform.GetComponent<CapsuleCollider>().enabled = false;
-           
-            Transform topParent = transform;
-            while (topParent.parent != null)
-            {
-                topParent = topParent.parent;
-                
-            }
-            
-            Vector3 TopParentPos = topParent.lossyScale;
-            topParent.transform.localScale = Vector3.one;
-            HiddenGameObject = Instantiate(Levelfeatures.instance.HiddenPrefab,transform.position,Quaternion.identity);
-            HiddenGameObject.transform.SetParent(transform);
-            HiddenGameObject.transform.localPosition =new Vector3(0f,1.25f,0f);
-            HiddenGameObject.transform.localRotation=Quaternion.Euler(0f,0f,0f);
-            Vector3 HiddernOgS = HiddenGameObject.transform.localScale;
-            HiddenGameObject.transform.localScale=Vector3.zero;
-            topParent.transform.localScale = TopParentPos;
-            HiddenGameObject.transform.DOScale(HiddernOgS, 0.5f).SetEase(Ease.OutBack);
-
-        }
-    }
+ 
+  
     public void TOUCH_EFECT()
     {
-        TOUCH_EFFECT.transform.SetParent(null);
-        _Tray.CheckForNeighbors(gameObject);
-        TOUCH_EFFECT.SetActive(true);
         _Tray.TrayHold.Remove(this);
-        
-        if (Rope)
+
+        _Tray.OnOneGo();
+        TOUCH_EFFECT.transform.SetParent(null);
+        TOUCH_EFFECT.SetActive(true);
+
+        _HingeJoint.connectedBody = null;
+        transform.GetComponent<Collider>().enabled = false;
+        transform.DOLocalRotate(new Vector3(0, 360, 0), 0.75f, RotateMode.FastBeyond360)
+            .SetEase(Ease.Linear);
+        transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.Linear).OnComplete(() =>
         {
-            _Tray.RopObject.SetActive(false);
-        }
-        
-        if (_Tray.TrayHold.Count == 0)
-        {
-            _Tray.IfAny();
-            _Tray.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(
-                () =>
-                {
-                    _Tray.SecondTraySpwan();
-                    _Tray.transform.parent.gameObject.SetActive(false);
-                });
-        }
+            transform.gameObject.SetActive(false);
+        });
+        transform.DOShakeRotation(
+            duration: 0.75f,
+            strength: new Vector3(5, 0, 20),
+            vibrato: 10,
+            randomness: 0,
+            fadeOut: true
+        );
+        // _Tray.CheckForNeighbors(gameObject);
+        // _Tray.TrayHold.Remove(this);
+        // transform.gameObject.SetActive(false);
+       
+        // if (_Tray.TrayHold.Count == 0)
+        // {
+        //     _Tray.IfAny();
+        //     _Tray.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(
+        //         () =>
+        //         {
+        //             _Tray.SecondTraySpwan();
+        //             _Tray.transform.parent.gameObject.SetActive(false);
+        //         });
+        // }
     }
 
     public void MY_COLOR()
     {
         if (COLOR_MANAGER.Instance == null) return;
-        for (int i = 0; i < THREAD_ROLLS.Count; i++)
-        {
-            THREAD_ROLLS[i].GetComponent<MeshRenderer>().material = COLOR_MANAGER.Instance.ROLL_COLORS[(int)CapColor];
-        }
+       
+           _OwnMeshRenderer.material = COLOR_MANAGER.Instance.ROLL_COLORS[(int)CapColor];
+        
     }
 
     private void OnValidate()

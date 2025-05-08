@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -9,7 +10,7 @@ public class Tray : MonoBehaviour
     public List<EachCap> TrayHold;
     public bool IsKeyHolder,IsLock;
     public GameObject key,Lock,RopObject;
-    private bool CheckHid,checkRop;
+    private bool CheckHid,checkRop,OnKin;
     void Start()
     {
         if (IsKeyHolder)
@@ -79,135 +80,163 @@ public class Tray : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < TrayHold.Count; i++)
-        {
-            if (TrayHold[i].Hidden)
-            {
-                CheckHid = true;
-            }
-        }
-        for (int i = 0; i < TrayHold.Count; i++)
-        {
-            if (TrayHold[i].Rope)
-            {
-                checkRop = true;
-            }
-        }
+      
 
-        SetUpRop();
+        // SetUpRop();
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Cap") && !IsInTrayHold(other.gameObject))
+        {
+            other.tag = "Untagged";
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Untagged") && !IsInTrayHold(other.gameObject))
+        {
+            other.tag = "Cap";
+        }
+    }
+
+    private bool IsInTrayHold(GameObject capObject)
+    {
+        foreach (EachCap cap in TrayHold)
+        {
+            if (cap.gameObject == capObject)
+                return true;
+        }
+        return false;
+    }
+
+
+    public void OnOneGo()
+    {
+        if (!OnKin)
+        {
+            OnKin = true;
+            transform.GetComponent<Rigidbody>().isKinematic = false;
+        }
+       
+        if (TrayHold.Count < 1)
+        {
+            transform.parent = null;
+        }
     }
     
 
-    public void SetUpRop()
-    {
-        if (checkRop)
-        {
-            List<EachCap> ropeCaps = new List<EachCap>();
-
-            foreach (var tray in TrayHold)
-            {
-                if (tray.Rope)
-                {
-                    ropeCaps.Add(tray.GetComponent<EachCap>());
-                }
-            }
-            Transform topParent = transform;
-            while (topParent.parent != null)
-            {
-                topParent = topParent.parent;
-
-            }
+//     public void SetUpRop()
+//     {
+//         if (checkRop)
+//         {
+//             List<EachCap> ropeCaps = new List<EachCap>();
 //
-            Vector3 TopParentPos = topParent.lossyScale;
-            topParent.transform.localScale = Vector3.one;
-
-            if (ropeCaps.Count == 2)
-            {
-                EachCap ropeA = ropeCaps[0];
-                EachCap ropeB = ropeCaps[1];
-
-                ropeA.ConnectedObject = ropeB;
-                ropeB.ConnectedObject = ropeA;
-
-                Vector3 midPoint = (ropeA.transform.position + ropeB.transform.position) / 2f;
-
-                // Default rotation
-                Quaternion rotation = Quaternion.identity;
-
-                // Check if both are "down" — adjust this condition as needed
-                // Check if ropeA and ropeB have the same parent Y position
-                if (ropeA.transform.parent. transform.position.y == ropeB.transform.parent.transform.position.y)
-                {
-                    // print("x");
-                    if (transform.parent.localEulerAngles.x == 270)
-                    {
-                        if (ropeA.transform.parent.transform.position.x == ropeB.transform.parent.transform.position.x)
-                        {
-                            rotation = Quaternion.Euler(0f, 90f, 0f);
-
-                        }
-
-                    }
-                    else
-                    {
-                        if (ropeA.transform.parent.transform.position.x == ropeB.transform.parent.transform.position.x)
-                        {
-                            if (transform.parent.localEulerAngles.x == 90)
-                            {
-                                rotation = Quaternion.Euler(0f, 90f, 0f);
-
-                            }
-                            
-                        }
-                        else
-                        {
-                            rotation = Quaternion.Euler(0f, 0f, 0f);
-
-                        }
-                    }
-
-                }
-                else
-                {
-                    if (ropeA.transform.parent.transform.localPosition.z == ropeB.transform.parent.transform.localPosition.z)
-                    {
-                        rotation = Quaternion.Euler(0f, 0f, 0f);
-
-                    }
-                    else
-                    {
-                        rotation = Quaternion.Euler(0f, 90f, 0f);
-
-                    }
-                    
-                }
-
-                // if (transform.parent.localEulerAngles.x==270)
-                // {
-                //    rotation = Quaternion.Euler(0, 90, 0); 
-                //     print(rotation);
-                // }
-              
-                RopObject = Instantiate(Levelfeatures.instance.RopePrefab, midPoint, Quaternion.identity);
-                RopObject.transform.SetParent(transform);
-                RopObject.transform.localRotation = rotation;
-                RopObject.transform.localPosition = new Vector3(
-                    RopObject.transform.localPosition.x,
-                    1.4f,
-                    RopObject.transform.localPosition.z
-                );
-                topParent.transform.localScale = TopParentPos;
-                RopObject.gameObject.SetActive(false);
-            }
-            else
-            {
-                transform.name = "cahane";
-                print(transform.name);
-                Debug.LogWarning("SetUpRop: Expected exactly 2 Rope objects, but found " + ropeCaps.Count);
-            }
-        }
-       
-    }
+//             foreach (var tray in TrayHold)
+//             {
+//                 if (tray.Rope)
+//                 {
+//                     ropeCaps.Add(tray.GetComponent<EachCap>());
+//                 }
+//             }
+//             Transform topParent = transform;
+//             while (topParent.parent != null)
+//             {
+//                 topParent = topParent.parent;
+//
+//             }
+// //
+//             Vector3 TopParentPos = topParent.lossyScale;
+//             topParent.transform.localScale = Vector3.one;
+//
+//             if (ropeCaps.Count == 2)
+//             {
+//                 EachCap ropeA = ropeCaps[0];
+//                 EachCap ropeB = ropeCaps[1];
+//
+//                 ropeA.ConnectedObject = ropeB;
+//                 ropeB.ConnectedObject = ropeA;
+//
+//                 Vector3 midPoint = (ropeA.transform.position + ropeB.transform.position) / 2f;
+//
+//                 // Default rotation
+//                 Quaternion rotation = Quaternion.identity;
+//
+//                 // Check if both are "down" — adjust this condition as needed
+//                 // Check if ropeA and ropeB have the same parent Y position
+//                 if (ropeA.transform.parent. transform.position.y == ropeB.transform.parent.transform.position.y)
+//                 {
+//                     // print("x");
+//                     if (transform.parent.localEulerAngles.x == 270)
+//                     {
+//                         if (ropeA.transform.parent.transform.position.x == ropeB.transform.parent.transform.position.x)
+//                         {
+//                             rotation = Quaternion.Euler(0f, 90f, 0f);
+//
+//                         }
+//
+//                     }
+//                     else
+//                     {
+//                         if (ropeA.transform.parent.transform.position.x == ropeB.transform.parent.transform.position.x)
+//                         {
+//                             if (transform.parent.localEulerAngles.x == 90)
+//                             {
+//                                 rotation = Quaternion.Euler(0f, 90f, 0f);
+//
+//                             }
+//                             
+//                         }
+//                         else
+//                         {
+//                             rotation = Quaternion.Euler(0f, 0f, 0f);
+//
+//                         }
+//                     }
+//
+//                 }
+//                 else
+//                 {
+//                     if (ropeA.transform.parent.transform.localPosition.z == ropeB.transform.parent.transform.localPosition.z)
+//                     {
+//                         rotation = Quaternion.Euler(0f, 0f, 0f);
+//
+//                     }
+//                     else
+//                     {
+//                         rotation = Quaternion.Euler(0f, 90f, 0f);
+//
+//                     }
+//                     
+//                 }
+//
+//                 // if (transform.parent.localEulerAngles.x==270)
+//                 // {
+//                 //    rotation = Quaternion.Euler(0, 90, 0); 
+//                 //     print(rotation);
+//                 // }
+//               
+//                 RopObject = Instantiate(Levelfeatures.instance.RopePrefab, midPoint, Quaternion.identity);
+//                 RopObject.transform.SetParent(transform);
+//                 RopObject.transform.localRotation = rotation;
+//                 RopObject.transform.localPosition = new Vector3(
+//                     RopObject.transform.localPosition.x,
+//                     1.4f,
+//                     RopObject.transform.localPosition.z
+//                 );
+//                 topParent.transform.localScale = TopParentPos;
+//                 RopObject.gameObject.SetActive(false);
+//             }
+//             else
+//             {
+//                 transform.name = "cahane";
+//                 print(transform.name);
+//                 Debug.LogWarning("SetUpRop: Expected exactly 2 Rope objects, but found " + ropeCaps.Count);
+//             }
+//         }
+//        
+//     }
 
     public void TurnOnRop()
     {
@@ -220,56 +249,56 @@ public class Tray : MonoBehaviour
 
         }
     }
-    public void CheckForNeighbors(GameObject Mover)
-    {
-        if (CheckHid)
-        {
-            List<GameObject> nearestObjects = new List<GameObject>();
-            float shortestDistance = Mathf.Infinity;
-            float threshold = 0.01f; // use a small threshold to handle floating point inaccuracies
-
-            foreach (EachCap cap in TrayHold)
-            {
-                GameObject obj = cap.gameObject;
-                if (obj == Mover) continue;
-
-                float distance = Vector3.Distance(Mover.transform.position, obj.transform.position);
-
-                if (Mathf.Abs(distance - shortestDistance) <= threshold)
-                {
-                    nearestObjects.Add(obj);
-                }
-                else if (distance < shortestDistance - threshold)
-                {
-                    nearestObjects.Clear();
-                    nearestObjects.Add(obj);
-                    shortestDistance = distance;
-                }
-            }
-
-            if (nearestObjects.Count > 0)
-            {
-                Debug.Log("Nearest objects:");
-                foreach (GameObject obj in nearestObjects)
-                {
-                    EachCap cap = obj.GetComponent<EachCap>();
-                    if (cap.Hidden)
-                    {
-                        cap.transform.GetComponent<CapsuleCollider>().enabled = true;
-
-                        cap.HiddenGameObject.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.Linear);
-                    }
-                    // obj.name = "near";
-                    // Debug.Log(obj.name + " at distance: " + shortestDistance);
-                }
-            }
-            else
-            {
-                Debug.Log("No neighbors found.");
-            }
-        }
-     
-    }
+    // public void CheckForNeighbors(GameObject Mover)
+    // {
+    //     if (CheckHid)
+    //     {
+    //         List<GameObject> nearestObjects = new List<GameObject>();
+    //         float shortestDistance = Mathf.Infinity;
+    //         float threshold = 0.01f; // use a small threshold to handle floating point inaccuracies
+    //
+    //         foreach (EachCap cap in TrayHold)
+    //         {
+    //             GameObject obj = cap.gameObject;
+    //             if (obj == Mover) continue;
+    //
+    //             float distance = Vector3.Distance(Mover.transform.position, obj.transform.position);
+    //
+    //             if (Mathf.Abs(distance - shortestDistance) <= threshold)
+    //             {
+    //                 nearestObjects.Add(obj);
+    //             }
+    //             else if (distance < shortestDistance - threshold)
+    //             {
+    //                 nearestObjects.Clear();
+    //                 nearestObjects.Add(obj);
+    //                 shortestDistance = distance;
+    //             }
+    //         }
+    //
+    //         if (nearestObjects.Count > 0)
+    //         {
+    //             Debug.Log("Nearest objects:");
+    //             foreach (GameObject obj in nearestObjects)
+    //             {
+    //                 EachCap cap = obj.GetComponent<EachCap>();
+    //                 if (cap.Hidden)
+    //                 {
+    //                     cap.transform.GetComponent<CapsuleCollider>().enabled = true;
+    //
+    //                     cap.HiddenGameObject.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.Linear);
+    //                 }
+    //                 // obj.name = "near";
+    //                 // Debug.Log(obj.name + " at distance: " + shortestDistance);
+    //             }
+    //         }
+    //         else
+    //         {
+    //             Debug.Log("No neighbors found.");
+    //         }
+    //     }
+    //  
+    // }
     public void SecondTraySpwan()
     {
         if (transform.parent.parent.transform.GetComponent<Levelfeatures>() != null)

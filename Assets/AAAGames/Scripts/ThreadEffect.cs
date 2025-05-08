@@ -118,9 +118,11 @@ public class ThreadEffect : MonoBehaviour
                     currentPhase = Phase.Idle;
                     if (_crate != null)
                     {
+                        _crate.checkFull();
+                        print("CREATE CREATE CREATE");
                         DOVirtual.DelayedCall(.1f, () =>
                         {
-                            _crate.checkFull();
+                           
                         });
                         SoundHapticManager.instance.PlayAudioWithOutVibration("ROUNDING");
                     }
