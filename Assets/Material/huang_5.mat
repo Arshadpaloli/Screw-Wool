@@ -7,69 +7,109 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: huang
-  m_Shader: {fileID: 4800000, guid: f6bde3dc48c530141a020dc3309149c7, type: 3}
+  m_Name: huang_5
+  m_Shader: {fileID: 4800000, guid: 7d42628fba85ccc49b31ca2d1a16f238, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_ValidKeywords:
   - TCP2_DISABLE_WRAPPED_LIGHT
+  - _ALPHAPREMULTIPLY_ON
   - _GLOSSYREFLECTIONS_OFF
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
-  m_LockedProperties:
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-      _MainTex:
+    - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-      _ThresholdTex:
+    - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: {}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ramp:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ThresholdTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
-      _BumpScale: 1
-      _Cutoff: 0.5
-      _DetailNormalMapScale: 1
-      _DstBlend: 0
-      _GlossMapScale: 1
-      _Glossiness: 0.41
-      _GlossyReflections: 0
-      _Metallic: 0
-      _Mode: 0
-      _OcclusionStrength: 1
-      _Parallax: 0.02
-      _RampSmooth: 1
-      _RampSmoothAdd: 0.75
-      _RampThreshold: 0.5
-      _RimMax: 0.85
-      _RimMin: 0.211
-      _RimStrength: 0.72
-      _SmoothnessTextureChannel: 0
-      _SpecBlend: 1
-      _SpecSmooth: 1
-      _SpecularHighlights: 1
-      _SrcBlend: 1
-      _TCP2_DISABLE_WRAPPED_LIGHT: 1
-      _TCP2_RAMPTEXT: 0
-      _TCP2_SPEC_TOON: 0
-      _TCP2_STYLIZED_FRESNEL: 0
-      _ThresholdScale: 4
-      _ThresholdStrength: 1
-      _UVSec: 0
-      _ZWrite: 1
-      __dummy__: 0
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 10
+    - _EnableOutline: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.41
+    - _GlossyReflections: 0
+    - _Metallic: 0
+    - _Mode: 3
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _RampSmooth: 1
+    - _RampSmoothAdd: 0.75
+    - _RampThreshold: 0.5
+    - _RimMax: 0.85
+    - _RimMin: 0.211
+    - _RimStrength: 0.72
+    - _SmoothnessTextureChannel: 0
+    - _SpecBlend: 1
+    - _SpecSmooth: 1
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _TCP2_DISABLE_WRAPPED_LIGHT: 1
+    - _TCP2_RAMPTEXT: 0
+    - _TCP2_SPEC_TOON: 0
+    - _TCP2_STYLIZED_FRESNEL: 0
+    - _ThresholdScale: 4
+    - _ThresholdStrength: 1
+    - _UVSec: 0
+    - _ZWrite: 0
+    - __dummy__: 0
     m_Colors:
-      _Color: {r: 1, g: 0.7019097, b: 0.2783019, a: 1}
-      _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-      _HColor: {r: 1, g: 1, b: 1, a: 1}
-      _RimColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.6}
-      _SColor: {r: 0.6981132, g: 0.5953882, b: 0.5235849, a: 1}
+    - _Color: {r: 1, g: 0.82621, b: 0.57924527, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.6}
+    - _SColor: {r: 0.6981132, g: 0.5953882, b: 0.5235849, a: 1}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
