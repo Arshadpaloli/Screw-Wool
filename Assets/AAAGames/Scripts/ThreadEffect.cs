@@ -46,6 +46,19 @@ public class ThreadEffect : MonoBehaviour
         {
             timer = 0f;
             currentPhase = Phase.Drawing;
+            if (_crate != null)
+            {
+                DOVirtual.DelayedCall(.3f, () =>
+                {
+                    _crate.checkFull();
+                    SoundHapticManager.instance.PlayAudioWithOutVibration("ROUNDING");
+
+                });
+            }
+            else
+            {
+                print("No end point");
+            }
         }
         
     }
@@ -116,14 +129,7 @@ public class ThreadEffect : MonoBehaviour
                 if (retractProgress >= 1f)
                 {
                     currentPhase = Phase.Idle;
-                    if (_crate != null)
-                    {
-                        DOVirtual.DelayedCall(.1f, () =>
-                        {
-                            _crate.checkFull();
-                        });
-                        SoundHapticManager.instance.PlayAudioWithOutVibration("ROUNDING");
-                    }
+                   
                     line.positionCount = 0;
                 }
                 break;

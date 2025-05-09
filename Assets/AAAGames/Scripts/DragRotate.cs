@@ -233,7 +233,6 @@ private void SetOpaqueMaterials(GameObject obj)
                 if (mat.HasProperty("_OutlineWidth"))
                 {
                     mat.SetFloat("_OutlineWidth", 0f);
-                    Debug.Log("Set _OutlineWidth = 1 on: " + cap.name);
                 }
                 else
                 {
@@ -285,7 +284,6 @@ private void SetTransparentMaterials(GameObject obj)
                  if (mat.HasProperty("_OutlineWidth"))
                 {
                     mat.SetFloat("_OutlineWidth", 4.4f);
-                    Debug.Log("Set _OutlineWidth = 1 on: " + cap.name);
                 }
                 else
                 {

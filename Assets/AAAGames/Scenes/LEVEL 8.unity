@@ -13712,11 +13712,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1004881445205310578, guid: e08e35365bc655041adb686797d3eed4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2502720907325577344, guid: e08e35365bc655041adb686797d3eed4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7961770147111583588, guid: e08e35365bc655041adb686797d3eed4, type: 3}
       propertyPath: m_Pivot.x
@@ -13800,7 +13800,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8453805452055968430, guid: e08e35365bc655041adb686797d3eed4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13882,7 +13882,7 @@ MonoBehaviour:
   _crateManager: {fileID: 0}
   GameStop: 0
   dragThreshold: 5
-  holdTime: 1
+  holdTime: 0.3
 --- !u!114 &1901032377
 MonoBehaviour:
   m_ObjectHideFlags: 0

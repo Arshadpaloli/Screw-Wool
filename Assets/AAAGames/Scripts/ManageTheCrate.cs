@@ -109,12 +109,13 @@ public class ManageTheCrate : MonoBehaviour
                 CancelFail();
 
                 ThreadEffect ThreadRope = WaitingRop[i].GetComponent<ThreadEffect>();
+                ThreadRope._crate = crate;
+
                 ThreadRope.endPoint = crate.OnThreadEnter();
                 WaitingRop[i].ReveleColor = ColorType.None;
                 ThreadRope.ROPE_GO();
                 WaitingRop[i].GetComponent<LineRenderer>().material.color = crate.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
                 WaitingRop[i].Start_invincibleForWaititngRop();
-                ThreadRope._crate = crate;
             }
         }
         
