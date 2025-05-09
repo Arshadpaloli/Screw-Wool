@@ -11,6 +11,7 @@ public class Tray : MonoBehaviour
     public bool IsKeyHolder,IsLock;
     public GameObject key,Lock,RopObject;
     private bool CheckHid,checkRop,OnKin;
+    public Material toonMaterial; 
     void Start()
     {
         if (IsKeyHolder)
@@ -79,9 +80,58 @@ public class Tray : MonoBehaviour
                 TrayHold[i].transform.GetComponent<CapsuleCollider>().enabled = false;
             }
         }
+        Renderer renderer = GetComponent<Renderer>();
 
-      
+        // Check if the Renderer exists
 
+        // Check if the Renderer exists
+        if (renderer != null)
+        {
+            // Get all the materials currently applied to the object
+            Material[] originalMaterials = renderer.materials;
+
+            // Create a new array to hold the instances of the materials
+            Material[] instantiatedMaterials = new Material[originalMaterials.Length];
+
+            // Loop through all materials and instantiate each one
+            for (int i = 0; i < originalMaterials.Length; i++)
+            {
+                // Instantiate the material to avoid modifying the original material
+                instantiatedMaterials[i] = new Material(originalMaterials[i]);
+
+                // Apply transparency settings (if needed, for Toon shader or custom shaders)
+                Material material = instantiatedMaterials[i];
+                
+                // Ensure the material is using transparency (change render mode if it's a Toon shader or similar)
+                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha); // Set blend mode to SrcAlpha
+                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha); // Destination blend mode
+                material.SetInt("_ZWrite", 1); // Disable writing to depth buffer for transparency
+                material.renderQueue = 3000; // Transparent materials should render after opaque ones
+
+                // Optional: Set alpha transparency if the shader has an "_Transparency" property
+                // material.SetFloat("_Transparency", 0.5f); // Adjust alpha as needed
+
+                // You can also manually adjust the transparency based on a texture if the shader uses it
+                // Assuming you're using a toon shader or similar, modify the texture's alpha (if applicable)
+                // Uncomment and modify this if needed
+                // Texture2D texture = material.mainTexture as Texture2D;
+                // if (texture != null)
+                // {
+                //     Color[] pixels = texture.GetPixels();
+                //     // Modify pixels based on transparency needs
+                // }
+
+                // Make sure to adjust any other specific shader properties if needed
+            }
+
+            // Assign the new instantiated materials back to the object
+            renderer.materials = instantiatedMaterials;
+        }
+        else
+        {
+            Debug.LogError("No Renderer found on this object.");
+        }
+    
         // SetUpRop();
     }
 

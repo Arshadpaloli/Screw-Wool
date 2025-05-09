@@ -5,8 +5,6 @@ public class WaitingThreadEffect : MonoBehaviour
 {
     public Transform startPoint;
     public Transform endPoint;
-    public Crate _crate;
-
     [Header("Thread Settings")]
     public int pointCount = 20;
     public float drawDuration = 1f;

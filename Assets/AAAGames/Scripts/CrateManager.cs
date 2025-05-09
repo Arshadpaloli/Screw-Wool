@@ -158,23 +158,23 @@ public class CrateManager : MonoBehaviour
         }
     }
 
-    public void MoveConnectedRop(EachCap Thread)
-    {
-        Crate OwnerPoint = ThreadPoint(Thread);
-        ThreadEffect ThreadRope = Thread.GetComponent<ThreadEffect>();
-        if (OwnerPoint != null)
-        {
-            ThreadRope.endPoint = OwnerPoint.OnThreadEnter();
-            Thread.GetComponent<CapsuleCollider>().enabled = false;
-            ThreadRope.ROPE_GO();
-            ThreadRope._crate = OwnerPoint;
-            On_Touch(Thread);
-        }
-        else
-        {
-            _ManageTheCrate.RopeMoveTOWaitingRop(Thread);
-        }
-    }
+    // public void MoveConnectedRop(EachCap Thread)
+    // {
+    //     Crate OwnerPoint = ThreadPoint(Thread);
+    //     ThreadEffect ThreadRope = Thread.GetComponent<ThreadEffect>();
+    //     if (OwnerPoint != null)
+    //     {
+    //         ThreadRope.endPoint = OwnerPoint.OnThreadEnter();
+    //         Thread.GetComponent<CapsuleCollider>().enabled = false;
+    //         ThreadRope.ROPE_GO();
+    //         ThreadRope._crate = OwnerPoint;
+    //         On_Touch(Thread);
+    //     }
+    //     else
+    //     {
+    //         _ManageTheCrate.RopeMoveTOWaitingRop(Thread);
+    //     }
+    // }
     public void ThreadToSlot(EachCap Thread)
     {
         // Thread.gameObject.SetActive(false);
@@ -183,6 +183,8 @@ public class CrateManager : MonoBehaviour
         ThreadEffect ThreadRope = Thread.GetComponent<ThreadEffect>();
         if (OwnerPoint != null)
         {
+            ThreadRope._crate = OwnerPoint;
+
             // if (Thread.ConnectedObject != null)
             // {
             //     DOVirtual.DelayedCall(.1f, () =>
@@ -193,10 +195,9 @@ public class CrateManager : MonoBehaviour
             // }
             ThreadRope.endPoint = OwnerPoint.OnThreadEnter();
             // Thread.GetComponent<CapsuleCollider>().enabled = false;
-            ThreadRope._crate = OwnerPoint;
 
             ThreadRope.ROPE_GO();
-            On_Touch(Thread);
+            // On_Touch(Thread);
           
         }
         else
